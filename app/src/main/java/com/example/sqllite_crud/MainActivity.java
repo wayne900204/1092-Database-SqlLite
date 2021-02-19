@@ -18,36 +18,45 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class MainActivity extends AppCompatActivity {
-    RecyclerView mRecyclerView;
-    ImageButton mAddUser;
+    RecyclerView recyclerView;
+    ImageButton addUser;
     MyAdapter myAdapter;
-    ArrayList<HashMap<String, String>> mDataList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
     UserSql userSql = new UserSql(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = findViewById(R.id.recycler);
-        mDataList = userSql.getData();
-        _buildToolBar();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        myAdapter = new MyAdapter(mDataList,userSql,MainActivity.this);
-        mRecyclerView.setAdapter(myAdapter);
+        initialById();
+
+        dataList = userSql.getData();
+        settingAppBar();
+        settingRecycleView();
     }
 
+    private void initialById(){
+        recyclerView = findViewById(R.id.recycler);
+        addUser = findViewById(R.id.btn_AddUser);
+    }
     // BuildToolBar
-    private void _buildToolBar() {
-        mAddUser = findViewById(R.id.btn_AddUser);
-        mAddUser.setOnClickListener(new View.OnClickListener() {
+    private void settingAppBar() {
+        addUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 _showDialog();
             }
         });
     }
+
+    private void settingRecycleView()
+    {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        myAdapter = new MyAdapter(dataList,userSql,MainActivity.this);
+        recyclerView.setAdapter(myAdapter);
+    }
+
 
     private void _showDialog() {
         final EditText firstName,lastName;
@@ -72,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     toast.setGravity(Gravity.CENTER | Gravity.TOP, 0, 0);
                     toast.show();
                 }
-
             }
         });
         dialog.show();

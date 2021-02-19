@@ -9,3 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.1] - 2021-02-05
 ### Added
 - SQLLite with CRUD in Android Studio include java.
+
+## [0.02] - 2021-02-20
+- Fix Coding Style
